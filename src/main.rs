@@ -5,34 +5,32 @@ extern crate dirs;
 mod config;
 mod rss_data;
 
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // open::that("https://rust-lang.org")?;
-    // open::that("/home/lyshkin/test.py")?;
-
-//        let cfg_file = dirs::config_dir().unwrap().join("build_notifications").join("build_notifications.toml");
-//        open::that(cfg_file)?;
-    use clap::{App,Arg};
+    use clap::{App, Arg};
     let matches = App::new("build_notifications")
-    .version("0.1")
-    .author("Piotr S. <mev_lyshkin@protonmail.com>")
-    .about("Simple job checker")
-    .arg(
-        Arg::with_name("config")
-           .short("c")
-           .help("open config file and exit"))
-    .get_matches();
+        .version("0.1")
+        .author("Piotr S. <mev_lyshkin@protonmail.com>")
+        .about("Simple job checker")
+        .arg(
+            Arg::with_name("config")
+                .short("c")
+                .help("open config file and exit"),
+        )
+        .get_matches();
 
     if matches.is_present("config") {
-        let cfg_file = dirs::config_dir().unwrap().join("build_notifications").join("build_notifications.toml");
+        let cfg_file = dirs::config_dir()
+            .unwrap()
+            .join("build_notifications")
+            .join("build_notifications.toml");
         open::that(cfg_file)?;
         return Ok(());
     }
 
     let mut rss_data = crate::rss_data::RssData::default();
 
-    loop{
+    loop {
         use tokio::time::{sleep, Duration};
 
         rss_data.run_checks().await?;

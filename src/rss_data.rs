@@ -1,5 +1,5 @@
 use crate::config::NotificationsConfig;
-use chrono::{DateTime, NaiveDateTime, TimeZone, Utc};
+use chrono::{DateTime, NaiveDateTime, Utc};
 use feed_rs::parser;
 use notify_rust::Notification;
 use serde::{Deserialize, Serialize};

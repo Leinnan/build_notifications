@@ -25,7 +25,7 @@ pub struct RssData {
 impl Default for RssData {
     fn default() -> Self {
         let data_file = RssData::path();
-        let cfg: NotificationsConfig = confy::load("build_notifications").unwrap();
+        let cfg = NotificationsConfig::read_from_file();
         let update_times = if data_file.exists() {
             let serialized = std::fs::read_to_string(data_file).unwrap_or_default();
             let deserialized: Self = serde_json::from_str(&serialized).unwrap();

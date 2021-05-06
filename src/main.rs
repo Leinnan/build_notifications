@@ -7,7 +7,9 @@ mod rss_data;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    use clap::{App, Arg};
+    let mut rss_data = crate::rss_data::RssData::default();
+
+    {use clap::{App, Arg};
     let matches = App::new("build_notifications")
         .version("0.1")
         .author("Piotr S. <mev_lyshkin@protonmail.com>")
@@ -26,9 +28,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .join("build_notifications.toml");
         open::that(cfg_file)?;
         return Ok(());
-    }
-
-    let mut rss_data = crate::rss_data::RssData::default();
+    }}
 
     loop {
         use tokio::time::{sleep, Duration};
